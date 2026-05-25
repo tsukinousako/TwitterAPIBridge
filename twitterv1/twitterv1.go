@@ -162,6 +162,11 @@ func InitServer(config *config.Config) {
 	app.Get("/i/discovery.:filetype", discovery)
 
 	app.Get("/1.1/discovery/universal.:filetype", discovery)
+  
+	// search.twitter.com -> /search (for easy patching)
+	app.Get("/search/trends/:woeid.:filetype", trends_woeid)
+	app.Get("/search/trends/current.:filetype", trends_woeid)
+  // todo: point search, daily and weekly to the relevant functions (when they appear)
 
 	// Lists
 	AddV1Path(app.Get, "/lists.:filetype", GetUsersLists)

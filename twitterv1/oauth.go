@@ -254,9 +254,10 @@ func AttemptToAuthenticateWithOauth(c *fiber.Ctx) error {
 		return c.Status(400).SendString("invalid/expired oauth_token")
 	}
 
-	if c.FormValue("auth_type") == "apppassword" {
-		username := c.FormValue("username")
-		password := c.FormValue("password")
+	// if c.FormValue("auth_type") == "apppassword" {
+  if true { // fix this when more auth types are added (if they exist)
+		username := c.FormValue("session[username_or_email]")
+		password := c.FormValue("session[password]")
 
 		res, pds, err := blueskyapi.Authenticate(username, password)
 		if err != nil {
@@ -279,7 +280,8 @@ func AttemptToAuthenticateWithOauth(c *fiber.Ctx) error {
 			}
 
 			tempTokens.Store(oauth_token, tokenData)
-			return c.SendString(fmt.Sprintf("Your pin is %s. Use it in the app you are trying to log into.", tokenData.Verifier))
+			c.Set("Content-Type", "text/html")
+			return c.SendString(fmt.Sprintf(`<html><body><div id="oauth_pin">%s</div></body></html>`, tokenData.Verifier))
 		} else {
 			// random base64 data
 			tokenData.Verifier = rand.Text()
@@ -336,8 +338,10 @@ func OAuthAccessToken(c *fiber.Ctx) error {
 	}
 
 	tempTokens.Delete(oauthParams.Verifier)
+  
+  
 
-	if tokenData.Verifier != oauthParams.Verifier {
+	if tokenData.Verifier != oauthParams.Verifier && tokenData.Verifier != c.Query("oauth_verifier") {
 		return c.Status(400).SendString("incorrect verifier, try again")
 	}
 

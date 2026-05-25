@@ -46,9 +46,10 @@
 
           <form action="/oauth/authorize" id="oauth_form" method="post" target="_self">
             <div>
-              <input name="username" type="text" placeholder="Username"><br><br>
-              <input name="password" type="password" placeholder="Password">
+              <input class="text" id="username_or_email" name="session[username_or_email]" type="text" placeholder="Username"><br><br>
+              <input class="password" id="session[password]" name="session[password]" type="password" placeholder="Password">
             </div>
+            <input name="authenticity_token" type="hidden" value="authtok">
             <input id="oauth_token" name="oauth_token" type="hidden" value="{{.OauthToken}}">
             <input id="auth_type" name="auth_type" type="hidden" value="apppassword">
             <fieldset class="buttons">
