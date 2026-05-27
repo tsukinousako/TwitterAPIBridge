@@ -182,6 +182,7 @@ func GetAuthFromReq(c *fiber.Ctx) (*string, *string, *string, *string, error) {
 
 		// separate the username and password
 		username = strings.Split(basicAuthUsernamePassword, ":")[0]
+		username = strings.TrimPrefix(username, "@")
 		authPassword = strings.Split(basicAuthUsernamePassword, ":")[1]
 
 		accessJwt, refreshJwt, access_expiry, refresh_expiry, userPDS, did, basicHashSalt, basicAuthSalt, basicUUID, err = db_controller.GetTokenViaBasic(username, authPassword)

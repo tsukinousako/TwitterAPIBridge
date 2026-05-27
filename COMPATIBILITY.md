@@ -54,3 +54,7 @@ some ios 5 version or smth: Requires PIN auth, which is unimplemented.
 ## Playstation Vita
 ### Livetweet
 ⚠️: Can log in, has major (fixable) issues. Also image upload boundary sillyness. Requires the following Vita plugin: https://silica.codes/Li/LiveSky
+
+## Windows Mobile
+### HTC Peep
+⚠️: 2.5.20172330, Can log in, and most common features work. Investigation on what doesn't work is underway. How to patch (coming soon): https://github.com/htc-remanila/resources
