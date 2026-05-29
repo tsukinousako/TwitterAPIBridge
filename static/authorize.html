@@ -6,7 +6,7 @@
     <meta charset="utf8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
-    <title>Authorize an application</title>
+    <title>Bluetweety / Authorize an application</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../static/authorize.css">
     <!--[if (IEMobile) & (lt IE 9)]>
       <link href="https://abs-0.twimg.com/login/phoenix-iemobile.49b26ac21d4736060188b5b79bbabc69ca8ef790.css" media="screen" rel="stylesheet" type="text/css" />
@@ -14,10 +14,15 @@
         
 
 <meta name="mswebdialog-title" content="Bluetweety">
-<!-- <meta name="mswebdialog-logo" content="https://abs.twimg.com/responsive-web/client-web/X_logo_white.22c1baea.png"> -->
+<meta name="mswebdialog-logo" content="https://abs.twimg.com/favicons/win8-auth-60.png">
 <meta name="mswebdialog-header-color" content="#202020">
 <meta name="mswebdialog-newwindowurl" content="*">
-
+<style type="text/css">
+@media (max-width: 42em) { .auth { margin: 0; border: 0; } }
+#oauth_form input.text { padding: 6px; width: 288px; background-color: #fff; }
+#oauth_form .row { background-color: #eaeaea; background-color: rgba(200,200,200,0.3); }
+.row { position: relative;display: inline-block;overflow: hidden;background-color: #eee;background-color: rgba(200,200,200,0.15);padding: 1px 4px;margin: 4px 0 0 -4px;-moz-border-radius: 4px;-webkit-border-radius: 4px;border-radius: 4px;line-height: 36px;zoom: 1; }
+</style>
 
 
       <!-- <script src="//abs-0.twimg.com/login/base.7ced3ee3ff61dadf91a9c9bd7082adc8f158a360.js" type="text/javascript"></script>
@@ -28,13 +33,12 @@
   <body class="oauth write tfw en logged-in    noloki">
 
     <div id="header" role="banner">
-      <!-- <div class="bar">
+      <div class="bar">
         <h1 class="logo">
-                    
           <a class="alternate-context" href="https://twb.preloading.dev">Bluetweety</a>
         </h1>
 
-      </div> -->
+      </div>
     </div>
 
     <div id="bd" role="main">
@@ -42,13 +46,24 @@
     <div class="auth">
       <h2>Authorize the application to access your account?</h2>
 
+<div class="permissions allow">
+  <p>This application <strong>will be able to</strong>:</p>
+   <ul class="permissions allow">
+    <li>Have full access to your account.</li>
+</ul>
+</div>
+
       
 
           <form action="/oauth/authorize" id="oauth_form" method="post" target="_self">
             <div>
-              <input class="text" id="username_or_email" name="session[username_or_email]" type="text" placeholder="Username"><br><br>
-              <input class="password" id="session[password]" name="session[password]" type="password" placeholder="Password">
-            </div>
+  	      <div class="row user">
+              <input class="text" id="username_or_email" name="session[username_or_email]" type="text" placeholder="Username">
+	      </div>
+  	      <div class="row password content">
+              <input class="password text" id="session[password]" name="session[password]" type="password" placeholder="Password">
+	      </div>
+	      </div>
             <input name="authenticity_token" type="hidden" value="authtok">
             <input id="oauth_token" name="oauth_token" type="hidden" value="{{.OauthToken}}">
             <input id="auth_type" name="auth_type" type="hidden" value="apppassword">
@@ -59,24 +74,6 @@
             </fieldset>
           </form>
 
-      
-<div class="permissions allow">
-  <p><strong>This application will be able to:</strong></p>
-   <ul class="permissions allow">
-    <li>Have full access to your account.</li>
-      <!-- <li>See Posts from your timeline (including protected Posts) as well as your Lists and collections.</li>
-      <li>See your profile information and account settings.</li>
-      <li>See accounts you follow, mute, and block.</li>
-      <li>Follow and unfollow accounts for you.</li>
-      <li>Update your profile and account settings.</li>
-      <li>Create and delete Posts for you, and engage with Posts created by others (Like, un-Like, or reply to a Post, Repost, etc.) for you.</li>
-      <li>Create, manage, and delete Lists and collections for you.</li>
-      <li>Mute, block, and report accounts for you.</li>
-      <li>See your email address.</li> -->
-</ul>
-
-
-</div>
 
 
 
