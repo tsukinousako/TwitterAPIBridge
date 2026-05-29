@@ -111,27 +111,32 @@ func ParseOAuthHeader(header string) (*OAuthParams, error) {
 }
 
 func ParseOAuthQueryParams(c *fiber.Ctx, params *OAuthParams) (*OAuthParams, error) {
-	for key, value := range c.Queries() {
-		switch key {
-		case "oauth_callback":
-			params.Callback = value
-		case "oauth_consumer_key":
-			params.ConsumerKey = value
-		case "oauth_nonce":
-			params.Nonce = value
-		case "oauth_signature":
-			params.Signature = value
-		case "oauth_signature_method":
-			params.SignatureMethod = value
-		case "oauth_timestamp":
-			params.Timestamp = value
-		case "oauth_version":
-			params.Version = value
-		case "oauth_token":
-			params.Token = value
-		case "oauth_verifier":
-			params.Verifier = value
-		}
+	if val := c.Query("oauth_callback"); val != "" {
+		params.Callback = val
+	}
+	if val := c.Query("oauth_consumer_key"); val != "" {
+		params.ConsumerKey = val
+	}
+	if val := c.Query("oauth_nonce"); val != "" {
+		params.Nonce = val
+	}
+	if val := c.Query("oauth_signature"); val != "" {
+		params.Signature = val
+	}
+	if val := c.Query("oauth_signature_method"); val != "" {
+		params.SignatureMethod = val
+	}
+	if val := c.Query("oauth_timestamp"); val != "" {
+		params.Timestamp = val
+	}
+	if val := c.Query("oauth_version"); val != "" {
+		params.Version = val
+	}
+	if val := c.Query("oauth_token"); val != "" {
+		params.Token = val
+	}
+	if val := c.Query("oauth_verifier"); val != "" {
+		params.Verifier = val
 	}
 
 	return params, nil
