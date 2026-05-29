@@ -350,6 +350,10 @@ func OAuthAccessToken(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString("Invalid OAuth header")
 	}
+	oauthParams, err = ParseOAuthQueryParams(c, oauthParams)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid OAuth query params")
+	}
 
 	// Verify timestamp is recent
 	timestamp, _ := strconv.ParseInt(oauthParams.Timestamp, 10, 64)
