@@ -110,6 +110,33 @@ func ParseOAuthHeader(header string) (*OAuthParams, error) {
 	return params, nil
 }
 
+func ParseOAuthQueryParams(c *fiber.Ctx, params *OAuthParams) (*OAuthParams, error) {
+	for key, value := range c.Queries() {
+		switch key {
+		case "oauth_callback":
+			params.Callback = value
+		case "oauth_consumer_key":
+			params.ConsumerKey = value
+		case "oauth_nonce":
+			params.Nonce = value
+		case "oauth_signature":
+			params.Signature = value
+		case "oauth_signature_method":
+			params.SignatureMethod = value
+		case "oauth_timestamp":
+			params.Timestamp = value
+		case "oauth_version":
+			params.Version = value
+		case "oauth_token":
+			params.Token = value
+		case "oauth_verifier":
+			params.Verifier = value
+		}
+	}
+
+	return params, nil
+}
+
 func VerifyOAuthSignature(params *OAuthParams, method, requestURL, consumerSecret string) bool {
 	// Create base string
 	baseParams := map[string]string{
@@ -160,6 +187,10 @@ func RequestToken(c *fiber.Ctx) error {
 	oauthParams, err := ParseOAuthHeader(authHeader)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString("Invalid OAuth header")
+	}
+	oauthParams, err = ParseOAuthQueryParams(c, oauthParams)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid OAuth query params")
 	}
 
 	// Verify timestamp is recent
